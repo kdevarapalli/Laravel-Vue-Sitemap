@@ -97,7 +97,7 @@ class GenerateSitemap extends Command {
      */
     private function arrayBuilder($apiURL, $urlArray, $type = "") {
         $response = $this->client->get($apiURL);
-        $response_body = json_decode(utf8_encode($this->stripBOM($response->getBody()->getContents())));
+        $response_body = json_decode(utf8_encode($response->getBody()->getContents()));
         $page_count = $response_body->total_pages;
 
         if ($page_count > 1) {
@@ -111,7 +111,7 @@ class GenerateSitemap extends Command {
                 $this->buildSitemapPages($urlArray, $this->sCounter);
             }
             $iresponse = $this->client->get($apiURL.$pageString.$ipage);
-            $iresponse_body = json_decode(utf8_encode($this->stripBOM($iresponse->getBody()->getContents())));
+            $iresponse_body = json_decode(utf8_encode($iresponse->getBody()->getContents()));
             $irecCount = $response_body->total_count - ($response_body->page_size * ($ipage-1));
             if ($irecCount < $response_body->page_size)
                 $iprecCounter = $irecCount;
